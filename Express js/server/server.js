@@ -41,7 +41,6 @@ app.get('/about', (req, res) => {
 
 // params parameter
 
-
 // http://localhost:4000/cart/phone15
 
 app.get('/cart/phone:Phoneid', (req, res) => {
