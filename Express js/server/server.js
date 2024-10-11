@@ -50,6 +50,14 @@ app.get('/cart/phone:Phoneid', (req, res) => {
 })
 
 
+// http://localhost:4000/phone/id108080258769
+
+app.get('/phone/id:phoneID', (req, res) => {
+    const id = req.params.phoneID;
+    res.send('Phone id sended!');
+    console.log(id);
+})
+
 // for 404 error
 app.get('*', (req, res) => {
     res.send('404  Error could not find!')
