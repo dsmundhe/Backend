@@ -22,6 +22,22 @@ app.get('/api/users/:id', (req, res) => {
     res.json(user);
 })
 
+
+//post method
+app.post('/api/user', (req, res) => {
+    const user = {
+        id: 22070707,
+        name: "Dipak Mundhe",
+        email: "dipakmundhe01@gmail.com",
+        age: 21,
+    };
+
+    return res.json(user);
+})
+
+
+// same for put, patch and delete methods
+
 // for 404 error
 app.get('*', (req, res) => {
     res.send('404 error data not found....');
