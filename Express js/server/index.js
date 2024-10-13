@@ -1,6 +1,6 @@
 const express = require('express');
 const app = express();
-const PORT = 4000;
+const PORT = 5000;
 
 // data form mockaroo.com
 const users = require('./data.json');
@@ -8,6 +8,19 @@ const users = require('./data.json');
 app.get('/users', (req, res) => {
     return res.send(users)
 })
+app.get('/', (req, res) => {
+    const html = `
+    <ul>
+    ${users.map((val) => {
+        return `<li>${val.first_name} ${val.email}</li>`
+    }).join(" ")}
+    </ul>
+    `
+    res.send(html)
+})
+// send data in SSR server side rendering
+
+
 
 // all data for hybrid application
 app.get('/api/users', (req, res) => {
