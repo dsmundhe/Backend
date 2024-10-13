@@ -1,9 +1,15 @@
 const express = require('express');
 const app = express();
 const PORT = 5000;
+const fs = require('fs');
+
+// Middle ware for access data
+app.use(express.urlencoded({ extended: false }))
+
+app.use(express.json())
 
 // data form mockaroo.com
-const users = require('./data.json');
+let users = require('./data.json');
 
 app.get('/users', (req, res) => {
     return res.send(users)
@@ -38,18 +44,78 @@ app.get('/api/users/:id', (req, res) => {
 
 //post method
 app.post('/api/user', (req, res) => {
-    const user = {
-        id: 22070707,
-        name: "Dipak Mundhe",
-        email: "dipakmundhe01@gmail.com",
-        age: 21,
-    };
+    const data = req.body;
+    users.push(data)
+    fs.writeFile('./data.json', JSON.stringify(users), (err, data) => {
+        if (!err) {
+            res.json({ user: "created!" });
+        }
+        else {
+            res.json({ user: "Not created!" })
+        }
+    })
 
-    return res.json(user);
+    console.log(data)
+
 })
 
 
+// delete method
+
+app.delete('/api/user', (req, res) => {
+    let id = req.body.id;
+    users = users.filter((val) => val.id !== id);
+    fs.writeFile('./data.json', JSON.stringify(users), (err, data) => {
+        if (err) {
+            res.json({ status: "Could not delete!" })
+        } else {
+            res.json({ status: "Deleted!" })
+        }
+    })
+})
 // same for put, patch and delete methods
+
+
+
+
+//put method
+
+
+app.put('/api/user/:id', (req, res) => {
+    const id = req.params.id;
+    const name = "Dipak Mundhe";
+    const user = users.find((val) => {
+        return val.id == id
+    });
+    user.first_name = name;
+    fs.writeFile('./data.json', JSON.stringify(users), (err, data) => {
+        if (err) {
+            res.json({ status: "Could not modify!" })
+        } else {
+            res.json({ status: 'Modify Successful!' })
+        }
+    })
+
+})
+
+
+// patch method
+
+app.patch('/api/user/:id', (req, res) => {
+    const id = req.params.id;
+    const name = "Dipak Mundhe";
+    const user = users.find((val) => {
+        return val.id == id
+    });
+    user.first_name = name;
+    fs.writeFile('./data.json', JSON.stringify(users), (err, data) => {
+        if (err) {
+            res.json({ status: "Could not modify!" })
+        } else {
+            res.json({ status: 'Modify Successful!' })
+        }
+    })
+})
 
 // for 404 error
 app.get('*', (req, res) => {
