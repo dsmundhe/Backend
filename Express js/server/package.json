@@ -2,10 +2,10 @@
   "name": "server",
   "version": "1.0.0",
   "description": "for learninig",
-  "main": "index.js",
+  "main": "middleWare.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node index.js"
+    "start": "node middleWare.js"
   },
   "author": "Dipak Mundhe",
   "license": "ISC",
