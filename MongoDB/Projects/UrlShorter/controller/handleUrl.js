@@ -1,6 +1,7 @@
-
+const shortid = require('shortid')
 async function handleUrl(req, res) {
-    res.send('Hello dm')
+    const shortID = shortid();
+    res.send(shortID)
 }
 
 
