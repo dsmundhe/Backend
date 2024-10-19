@@ -11,38 +11,39 @@
         margin: 0;
         padding: 0;
         background: linear-gradient(135deg, #667eea, #764ba2);
-        height: 100vh;
         display: flex;
         justify-content: center;
         align-items: center;
         flex-direction: column;
         color: white;
+        min-height: 100vh;
       }
 
       .container {
         text-align: center;
         background: rgba(255, 255, 255, 0.1);
-        padding: 40px;
+        padding: 30px;
         border-radius: 15px;
         box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
         backdrop-filter: blur(15px);
         width: 90%;
         max-width: 600px;
         animation: fadeIn 1.5s ease-in-out;
+        margin-top: 50px;
       }
 
       h1 {
-        font-size: 2.8rem;
-        margin-bottom: 20px;
+        font-size: 2.5rem;
+        margin-bottom: 15px;
         text-transform: uppercase;
         letter-spacing: 3px;
         color: #ffe53b;
       }
 
       p {
-        font-size: 1.3rem;
+        font-size: 1.2rem;
         color: white;
-        margin-bottom: 30px;
+        margin-bottom: 20px;
       }
 
       /* Form Styling */
@@ -51,6 +52,7 @@
         display: flex;
         flex-direction: column;
         align-items: center;
+        width: 100%;
       }
 
       input[type="url"] {
@@ -92,20 +94,20 @@
 
       /* URLs List Styling */
       .url-list {
-        margin-top: 10px;
+        margin-top: 20px;
         text-align: left;
-        width: 550px;
+        width: 90%;
+        max-width: 600px;
       }
 
       .url-item {
-        margin-bottom: 5px;
+        margin-bottom: 15px;
         background-color: rgba(255, 255, 255, 0.2);
         padding: 15px;
         border-radius: 10px;
         box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
         word-wrap: break-word;
         animation: slideIn 1s ease;
-        height: 100px;
       }
 
       .short-url {
@@ -114,16 +116,54 @@
         color: #ffe53b;
         text-decoration: none;
         transition: color 0.3s ease;
+        margin-right: 10px;
       }
 
-      .short-url:hover {
-        color: #ffd700;
+      .copy-button {
+        padding: 6px 12px;
+        background-color: #ffe53b;
+        color: #333;
+        font-size: 0.9rem;
+        font-weight: bold;
+        border: none;
+        border-radius: 20px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        margin-left: 10px;
+        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+      }
+
+      .copy-button:hover {
+        background-color: #ffd700;
+        transform: translateY(-2px) scale(1.05);
+        box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
       }
 
       .original-url {
-        color: #1e1818;
+        color: #f0f0f0;
         font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
         font-size: 1rem;
+      }
+
+      /* Pop-up Notification Styling */
+      .popup {
+        position: fixed;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        background-color: rgba(0, 0, 0, 0.8);
+        color: #ffe53b;
+        padding: 15px 20px;
+        border-radius: 30px;
+        font-size: 1rem;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.5s ease, visibility 0.5s ease;
+      }
+
+      .popup.show {
+        opacity: 1;
+        visibility: visible;
       }
 
       /* Animation */
@@ -146,6 +186,9 @@
           transform: translateX(0);
         }
       }
+      h2{
+        text-align: center;
+      }
     </style>
   </head>
   <body>
@@ -165,24 +208,50 @@
         </div>
         <button class="cta-button" type="submit">Shorten URL</button>
       </form>
-
-      <!-- Display Shortened URLs -->
     </div>
+
     <div class="url-list">
-      <h2>Shortened URLs:</h2>
+      <h2>Shortened URLs</h2>
       <% if (urls.length > 0) { %> <% urls.forEach(function(url) { %>
       <div class="url-item">
-        <p class="short-url">
-          <span>Click: </span
-          ><a href="<%= url.redirectUrl %>" target="_blank"
-            ><%= url.shortID %></a
-          >
-        </p>
-        <p class="original-url">Original: <%= url.redirectUrl %></p>
+        <p class="short-url">http://localhost:8000/url/<%= url.shortID %></p>
+        <button
+          class="copy-button"
+          onclick="copyToClipboard('http://localhost:8000/url/<%= url.shortID %>')"
+        >
+          Copy
+        </button>
+        <p class="original-url">original-url : <%= url.redirectUrl %></p>
       </div>
-      <% }) %> <% } else { %>
-      <p>No URLs have been shortened yet.</p>
+      <% }); %> <% } else { %>
+      <h2>No URLs have been shortened yet.</h2>
       <% } %>
     </div>
+
+    <!-- Pop-up Notification -->
+    <div class="popup" id="popup">URL copied to clipboard!</div>
+
+    <script>
+      function copyToClipboard(text) {
+        navigator.clipboard
+          .writeText(text)
+          .then(() => {
+            showPopup(); // Call the function to show the pop-up
+          })
+          .catch((err) => {
+            console.error("Error copying text: ", err);
+          });
+      }
+
+      function showPopup() {
+        const popup = document.getElementById("popup");
+        popup.classList.add("show");
+
+        // Hide the pop-up after 3 seconds
+        setTimeout(() => {
+          popup.classList.remove("show");
+        }, 3000);
+      }
+    </script>
   </body>
 </html>

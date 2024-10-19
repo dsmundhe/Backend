@@ -4,6 +4,6 @@ const router = express.Router();
 const { naviGation } = require('../controller/navigation')
 
 router.post('/', handleUrl);
-router.get('/navigation/:shortID', naviGation)
+router.get('/:shortID', naviGation)
 
 module.exports = router;
