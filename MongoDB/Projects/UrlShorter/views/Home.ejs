@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Home Page</title>
+    <style>
+      /* General Styles */
+      body {
+        font-family: "Poppins", sans-serif;
+        margin: 0;
+        padding: 0;
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        color: white;
+      }
+
+      .container {
+        text-align: center;
+        background: rgba(255, 255, 255, 0.1);
+        padding: 40px;
+        border-radius: 15px;
+        box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
+        backdrop-filter: blur(15px);
+        width: 90%;
+        max-width: 600px;
+        animation: fadeIn 1.5s ease-in-out;
+      }
+
+      h1 {
+        font-size: 2.8rem;
+        margin-bottom: 20px;
+        text-transform: uppercase;
+        letter-spacing: 3px;
+        color: #ffe53b;
+      }
+
+      p {
+        font-size: 1.3rem;
+        color: white;
+        margin-bottom: 30px;
+      }
+
+      /* Form Styling */
+      .form-group {
+        margin-bottom: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      input[type="url"] {
+        padding: 12px 15px;
+        width: 100%;
+        border: none;
+        border-radius: 8px;
+        font-size: 1rem;
+        margin-bottom: 10px;
+        outline: none;
+        transition: box-shadow 0.3s ease;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      }
+
+      input[type="url"]:focus {
+        box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+      }
+
+      /* Button Styling */
+      .cta-button {
+        padding: 12px 25px;
+        background-color: #ffe53b;
+        color: #333;
+        font-size: 1.1rem;
+        font-weight: bold;
+        border: none;
+        border-radius: 50px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: inline-block;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+      }
+
+      .cta-button:hover {
+        background-color: #ffd700;
+        transform: translateY(-5px) scale(1.05);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+      }
+
+      /* URLs List Styling */
+      .url-list {
+        margin-top: 10px;
+        text-align: left;
+        width: 550px;
+      }
+
+      .url-item {
+        margin-bottom: 5px;
+        background-color: rgba(255, 255, 255, 0.2);
+        padding: 15px;
+        border-radius: 10px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        word-wrap: break-word;
+        animation: slideIn 1s ease;
+        height: 100px;
+      }
+
+      .short-url {
+        font-weight: bold;
+        font-size: 1.2rem;
+        color: #ffe53b;
+        text-decoration: none;
+        transition: color 0.3s ease;
+      }
+
+      .short-url:hover {
+        color: #ffd700;
+      }
+
+      .original-url {
+        color: #1e1818;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        font-size: 1rem;
+      }
+
+      /* Animation */
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @keyframes slideIn {
+        from {
+          transform: translateX(-100%);
+        }
+        to {
+          transform: translateX(0);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Welcome, <%= name %>!</h1>
+      <p>Enter a URL to shorten it:</p>
+
+      <!-- URL Form -->
+      <form action="/url" method="POST">
+        <div class="form-group">
+          <input
+            type="url"
+            name="redirectUrl"
+            placeholder="Enter URL"
+            required
+          />
+        </div>
+        <button class="cta-button" type="submit">Shorten URL</button>
+      </form>
+
+      <!-- Display Shortened URLs -->
+    </div>
+    <div class="url-list">
+      <h2>Shortened URLs:</h2>
+      <% if (urls.length > 0) { %> <% urls.forEach(function(url) { %>
+      <div class="url-item">
+        <p class="short-url">
+          <span>Click: </span
+          ><a href="<%= url.redirectUrl %>" target="_blank"
+            ><%= url.shortID %></a
+          >
+        </p>
+        <p class="original-url">Original: <%= url.redirectUrl %></p>
+      </div>
+      <% }) %> <% } else { %>
+      <p>No URLs have been shortened yet.</p>
+      <% } %>
+    </div>
+  </body>
+</html>
