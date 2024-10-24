@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login Page</title>
+    <style>
+      /* Styling for the body */
+      body {
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background: linear-gradient(135deg, #ff9966, #ff5e62);
+        font-family: Arial, sans-serif;
+      }
+
+      /* Styling for the login form container */
+      .login-container {
+        background-color: rgba(255, 255, 255, 0.8);
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        max-width: 400px;
+        width: 100%;
+      }
+
+      /* Styling for the form title */
+      h1 {
+        text-align: center;
+        color: #333;
+        font-size: 2em;
+        margin-bottom: 20px;
+      }
+
+      /* Styling for the form fields */
+      input[type="text"],
+      input[type="password"] {
+        width: 100%;
+        padding: 10px;
+        margin: 10px 0;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        box-sizing: border-box;
+        font-size: 1em;
+      }
+
+      /* Styling for the login button */
+      input[type="submit"] {
+        width: 100%;
+        padding: 10px;
+        background-color: #ff5e62;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 1.1em;
+        transition: background-color 0.3s ease;
+      }
+
+      /* Hover effect for the submit button */
+      input[type="submit"]:hover {
+        background-color: #ff9966;
+      }
+
+      /* Styling for the signup button */
+      .signup-button {
+        margin-top: 20px;
+        display: block;
+        width: 100%;
+        text-align: center;
+        background-color: #333;
+        color: white;
+        text-decoration: none;
+        padding: 10px 0;
+        border-radius: 5px;
+        font-size: 1.1em;
+        transition: background-color 0.3s ease;
+      }
+
+      /* Hover effect for the signup button */
+      .signup-button:hover {
+        background-color: #555;
+      }
+
+      /* Removing default button styles */
+      .login-container button {
+        width: 100%;
+        background: none;
+        border: none;
+        padding: 0;
+        margin: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="login-container">
+      <h1>Login Form</h1>
+      <form action="/user/login" method="POST">
+        <input type="text" name="email" placeholder="Email" required />
+        <input
+          type="password"
+          name="password"
+          placeholder="Password"
+          required
+        />
+        <input type="submit" value="Login" />
+      </form>
+      <button>
+        <a href="/signup" class="signup-button">Signup</a>
+      </button>
+    </div>
+  </body>
+</html>
